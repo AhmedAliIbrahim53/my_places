@@ -1,4 +1,4 @@
-# my_places
+# My Places
 
 My beloved Places will be stored here
 
