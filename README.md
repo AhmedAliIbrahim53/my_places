@@ -2,5 +2,3 @@
 
 My beloved Places will be stored here
 
-## Getting Started
-
