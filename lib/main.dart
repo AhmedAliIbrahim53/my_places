@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_places/screens/add_place_screen.dart';
-import 'package:my_places/screens/places_list_screen.dart';
 import 'package:provider/provider.dart';
 
 import './providers/places.dart';
+import './screens/add_place_screen.dart';
+import './screens/places_list_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,3 +29,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+// dealing with location is not implemented yet due api

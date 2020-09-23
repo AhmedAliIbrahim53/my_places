@@ -19,40 +19,48 @@ class PlacesListScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Consumer<Places>(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'You have not add any places yet, Please add some.',
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              RaisedButton.icon(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(AddPlaceScreen.id);
-                },
-                icon: Icon(Icons.add),
-                label: Text('Add'),
-              ),
-            ],
-          ),
-        ),
-        builder: (ctx, places, ch) => places.items.length <= 0
-            ? ch
-            : ListView.builder(
-                padding: const EdgeInsets.all(10),
-                itemCount: places.items.length,
-                itemBuilder: (ctx, i) => ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: FileImage(places.items[i].image),
+      body: FutureBuilder(
+        future: Provider.of<Places>(context, listen: false).fetchAndSetPlaces(),
+        builder: (ctx, snapshot) => snapshot.connectionState ==
+                ConnectionState.waiting
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Consumer<Places>(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'You have not add any places yet, Please add some.',
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      RaisedButton.icon(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(AddPlaceScreen.id);
+                        },
+                        icon: Icon(Icons.add),
+                        label: Text('Add'),
+                      ),
+                    ],
                   ),
-                  title: Text(places.items[i].title),
-                  onTap: () {},
                 ),
+                builder: (ctx, places, ch) => places.items.length <= 0
+                    ? ch
+                    : ListView.builder(
+                        padding: const EdgeInsets.all(10),
+                        itemCount: places.items.length,
+                        itemBuilder: (ctx, i) => ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: FileImage(places.items[i].image),
+                          ),
+                          title: Text(places.items[i].title),
+                          onTap: () {},
+                        ),
+                      ),
               ),
       ),
     );
